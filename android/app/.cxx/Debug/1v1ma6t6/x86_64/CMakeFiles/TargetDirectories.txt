@@ -1,0 +1,2 @@
+C:/Aviral/Projects/vision_gpt/android/app/.cxx/Debug/1v1ma6t6/x86_64/CMakeFiles/edit_cache.dir
+C:/Aviral/Projects/vision_gpt/android/app/.cxx/Debug/1v1ma6t6/x86_64/CMakeFiles/rebuild_cache.dir
