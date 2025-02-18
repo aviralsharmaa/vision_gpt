@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_result.dart'
     show SpeechRecognitionResult;
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:vision_gpt/openai_service.dart';
 import 'package:vision_gpt/options_box.dart';
 import 'package:vision_gpt/pallete.dart';
 
@@ -15,6 +16,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final speechToText = SpeechToText();
   String lastWords = '';
+  final OpenAIService openAIService= OpenAIService();
+
   @override
   void initState() {
     super.initState();
@@ -22,16 +25,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initSpeechToText() async {
-    bool available = await speechToText.initialize(
+   await speechToText.initialize(
       onStatus: (status) => print("Speech-to-Text Status: $status"),
       onError: (error) => print("Speech-to-Text Error: $error"),
     );
-    if (available) {
-      speechToText.listen(onResult: onSpeechResult, localeId: "en_US");
-    }
-    setState(() {});
-  }
 
+  }
   Future<void> startListening() async {
     await speechToText.listen(onResult: onSpeechResult);
     setState(() {});
@@ -163,13 +162,15 @@ class _HomePageState extends State<HomePage> {
         onPressed: () async {
           if (await speechToText.hasPermission && speechToText.isNotListening) {
             await startListening();
-            print("Speech-to-Text is available!");
+            // print("Speech-to-Text is available!");
           } else if (speechToText.isListening) {
             await stopListening();
-            print("Stopping Listening...");
+            // print("Stopping Listening...");
           } else {
             initSpeechToText();
           }
+          print("Speech-to-Text Result: $lastWords");
+
         },
         child: Icon(Icons.mic),
       ),
